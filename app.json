@@ -2,5 +2,8 @@
   "name": "perf-runner",
   "description": "Runs (frontend) performance tests on your GitHub's deployment",
   "repository": "https://github.com/nddery/perf-runner",
-  "buildpacks": "heroku/nodejs"
+  "buildpacks": [
+    { "url": "heroku/nodejs" }
+    { "url": "https://github.com/jontewks/puppeteer-heroku-buildpack" }
+  ]
 }

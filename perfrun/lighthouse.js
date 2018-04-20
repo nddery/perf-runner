@@ -47,7 +47,9 @@ function massageLighthouseResult(lhr) {
 async function lighthouse(options) {
   const { url, version } = options
   log('launching puppeteer', options)
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  })
 
   log('running lighthouse', options)
   const lhr = await Lighthouse(
