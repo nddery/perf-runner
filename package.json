@@ -1,0 +1,40 @@
+{
+  "name": "perf-runner",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Nicolas Duvieusart Déry",
+  "repository": "https://github.com/nddery/perf-runner",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": "8.x.x",
+    "yarn": "1.x.x"
+  },
+  "scripts": {
+    "start": "pm2-runtime index.js -i max",
+    "dev": "nodemon index.js",
+    "precommit": "lint-staged",
+    "format": "prettier --write **/*.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bottleneck": "^2.3.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "firebase-admin": "^5.12.0",
+    "lighthouse": "^2.9.4",
+    "pm2": "^2.10.2",
+    "puppeteer": "^1.3.0"
+  },
+  "devDependencies": {
+    "lint-staged": "^7.0.4",
+    "nodemon": "^1.17.3",
+    "prettier": "^1.12.1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
