@@ -27,6 +27,16 @@ async function perfrun(options) {
   }
 
   limiter.on('idle', analyze.bind(null, options))
+
+  limiter.on('error', error => {
+    console.log(`[bottleneck] ${error.message}`)
+  })
+
+  if (process.env.DEBUG) {
+    limiter.on('debug', function (message, data) {
+      console.log(`[bottleneck] ${message}`)
+    })
+  }
 }
 
 module.exports = perfrun
