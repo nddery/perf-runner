@@ -1,6 +1,5 @@
 const bodyParser = require('body-parser')
 const perfrun = require('../perfrun')
-const log = require('../log')
 
 const checkRequestValidity = (req, res, next) => {
   const crypto = require('crypto')
@@ -29,13 +28,10 @@ module.exports = app => {
         hook === 'deployment_status' &&
         req.body.deployment_status.state === 'success'
       ) {
-        const options = {
+        perfrun({
           url: req.body.deployment.payload.web_url,
           version: req.body.deployment.sha
-        }
-
-        log('Request received', options)
-        perfrun(options)
+        })
 
         return res.sendStatus(200).end()
       }

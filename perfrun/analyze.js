@@ -1,5 +1,5 @@
 const { db, url2Key } = require('./database')
-const log = require('../log')
+const log = require('./log')
 
 function calculateAverages(snapshot) {
   const results = snapshot.val()
@@ -47,13 +47,13 @@ function calculateGlobalAverages(keys, totals, divider) {
 
 function analyze(options) {
   const { url, version } = options
-  log('Processing results', options)
+  log('processing results', options)
   db.ref(`/raw_results/${url2Key(url)}/${version}`).once(
     'value',
     snapshot => {
       const averages = calculateAverages(snapshot)
 
-      log('Pushing averages', options)
+      log('pushing averages', options)
       db.ref(`/averages/${url2Key(url)}/${version}`).set(averages)
 
       db.ref('/averages/_global').once('value', snapshot => {
@@ -63,7 +63,7 @@ function analyze(options) {
         const totals = calculateTotals(keys, results, averages)
         const globalAverages = calculateGlobalAverages(keys, totals, results.divider)
 
-        console.log('Pushing global averages')
+        log('pushing global averages', options)
         db.ref('/averages/_global').set({
           divider: (results.divider += 1),
           averages: globalAverages,
@@ -71,7 +71,7 @@ function analyze(options) {
         })
       })
     },
-    error => console.log(error)
+    error => log(error.message)
   )
 }
 

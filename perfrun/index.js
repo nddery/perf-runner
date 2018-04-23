@@ -3,7 +3,7 @@ const analyze = require('./analyze')
 const lighthouse = require('./lighthouse')
 const { db, url2Key } = require('./database')
 const queue = require('./queue')
-const log = require('../log')
+const log = require('./log')
 
 async function perfrun(options) {
   const { url, version } = options

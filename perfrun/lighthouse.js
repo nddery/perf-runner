@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer')
 const Lighthouse = require('lighthouse')
 const config = require('lighthouse/lighthouse-core/config/perf.json')
 const { db, url2Key } = require('./database')
-const log = require('../log')
+const log = require('./log')
 
 /* audit id: keep extended info */
 const audits = {
@@ -36,7 +36,7 @@ function massageLighthouseResult(lhr) {
         rest.extendedInfo = audit.result.extendedInfo
       }
 
-      // Ensure no undefined values, as this would break Firebase
+      // Ensure no undefined values, as it break Firebase
       carry[audit.id] = JSON.parse(JSON.stringify(rest))
 
       return carry
