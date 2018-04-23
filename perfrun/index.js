@@ -23,6 +23,8 @@ async function perfrun(options) {
     limiter.schedule({ id: `test-${options.version}-${i}` }, lighthouse, {
       ...options,
       run: i
+    }).catch(error => {
+      console.log(`[bottleneck] ${error.message}`)
     })
   }
 
