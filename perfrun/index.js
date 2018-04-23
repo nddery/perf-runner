@@ -6,18 +6,21 @@ const queue = require('./queue')
 const log = require('./log')
 
 async function perfrun(options) {
-  const { url, version } = options
-
   log('warming up', options)
-  await warmup(url)
+  try {
+    options.url = await warmup(options.url)
+  } catch (error) {
+    console.log(error.message)
+    return
+  }
 
   log('running tests', options)
-  db.ref(`/refs/${url2Key(url)}`).push(version)
-  const limiter = queue.key(`test-${version}`)
+  db.ref(`/refs/${url2Key(options.url)}`).push(options.version)
+  const limiter = queue.key(`test-${options.version}`)
   const numberOfTestsToRun = process.env.NUMBER_OF_TESTS_TO_RUN || 5
 
   for (let i = 0; i < numberOfTestsToRun; i++) {
-    limiter.schedule({ id: `test-${version}-${i}` }, lighthouse, {
+    limiter.schedule({ id: `test-${options.version}-${i}` }, lighthouse, {
       ...options,
       run: i
     })
