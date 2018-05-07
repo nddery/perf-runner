@@ -36,5 +36,10 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "keywords": [
+    "performance-testing",
+    "performance",
+    "webperf"
+  ]
 }
